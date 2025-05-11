@@ -479,12 +479,12 @@
             <!-- What is X% of Y? -->
             <form id="form-percent-of" class="calc-form">
                 <div class="input-group">
-                    <input type="text" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
                     <div id="percent-of-x-desc" class="sr-only">Enter the percentage value without the % symbol</div>
                 </div>
                 <div class="input-group-addon">% of</div>
                 <div class="input-group">
-                    <input type="text" id="percent-of-y" placeholder="Enter the number" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-y" placeholder="Enter the number" required>
                 </div>
                 <button type="submit" id="percent-of-submit">Calculate</button>
 
@@ -498,11 +498,11 @@
             <!-- X is what % of Y? -->
             <form id="form-percent-is" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="text" id="percent-is-x" placeholder="Enter your value" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-x" placeholder="Enter your value" required>
                 </div>
                 <div class="input-group-addon">is what percentage of</div>
                 <div class="input-group">
-                    <input type="text" id="percent-is-y" placeholder="Enter total value" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-y" placeholder="Enter total value" required>
                 </div>
                 <button type="submit" id="percent-is-submit">Calculate</button>
 
@@ -516,11 +516,11 @@
             <!-- What is the % change from X to Y? -->
             <form id="form-percent-change" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="text" id="percent-change-x" placeholder="Enter starting value" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-x" placeholder="Enter starting value" required>
                 </div>
                 <div class="input-group-addon">changed to</div>
                 <div class="input-group">
-                    <input type="text" id="percent-change-y" placeholder="Enter new value" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-y" placeholder="Enter new value" required>
                 </div>
                 <button type="submit" id="percent-change-submit">Calculate</button>
 
@@ -535,11 +535,11 @@
             <!-- What is the % difference between X and Y? -->
             <form id="form-percent-difference" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="text" id="percent-difference-x" placeholder="Enter first number" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-x" placeholder="Enter first number" required>
                 </div>
                 <div class="input-group-addon">compared with</div>
                 <div class="input-group">
-                    <input type="text" id="percent-difference-y" placeholder="Enter second number" required>
+                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-y" placeholder="Enter second number" required>
                 </div>
                 <button type="submit" id="percent-difference-submit">Calculate</button>
 

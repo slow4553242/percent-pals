@@ -7,17 +7,21 @@
     <meta name="keywords" content="percent calculator, percentage calculator, percentage change, percentage difference, cute animals, online calculator">
     <meta name="author" content="Quick Percent Calculator">
     
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph meta tags for link previews -->
+    <meta property="og:title" content="Percent Pals - Quick Percent Calculator">
+    <meta property="og:description" content="Easy percent calculations with instant results. Calculate percentages, percentage change, and differences - plus get rewarded with cute animal photos!">
+    <meta property="og:image" content="https://percentpals.com/preview.png">
+    <meta property="og:url" content="https://percentpals.com/">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:title" content="Quick Percent Calculator - Calculate with Cute Animals">
-    <meta property="og:description" content="Free online percent calculator that rewards you with cute animal photos. Easy calculations for percentage change, difference, and more.">
     
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourdomain.com/">
     <meta property="twitter:title" content="Quick Percent Calculator - Calculate with Cute Animals">
     <meta property="twitter:description" content="Free online percent calculator that rewards you with cute animal photos. Easy calculations for percentage change, difference, and more.">
+
+     <!-- Standard description meta tag as a fallback -->
+    <meta name="description" content="Easy percent calculations with instant results. Calculate percentages, percentage change, and differences - plus get rewarded with cute animal photos!">
     
     <title>Quick Percent Calculator - Free Online Percentage Calculator with Cute Animals</title>
     <style>
@@ -291,6 +295,7 @@
         }
         
         .result {
+            display: none; /* Hidden by default */
             background-color: var(--success-light);
             border-radius: var(--border-radius);
             padding: 1.75rem;

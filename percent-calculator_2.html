@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online percent calculator with cute animal photos. Calculate percentage change, percentage difference, and more with instant results.">
+    <meta name="keywords" content="percent calculator, percentage calculator, percentage change, percentage difference, cute animals, online calculator">
+    <meta name="author" content="Quick Percent Calculator">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:title" content="Quick Percent Calculator - Calculate with Cute Animals">
+    <meta property="og:description" content="Free online percent calculator that rewards you with cute animal photos. Easy calculations for percentage change, difference, and more.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourdomain.com/">
+    <meta property="twitter:title" content="Quick Percent Calculator - Calculate with Cute Animals">
+    <meta property="twitter:description" content="Free online percent calculator that rewards you with cute animal photos. Easy calculations for percentage change, difference, and more.">
+    
+    <title>Quick Percent Calculator - Free Online Percentage Calculator with Cute Animals</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #2563eb;
+            --background: #f8fafc;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+            --success-light: #d1fae5;
+            --container-width: 640px;
+            --container-padding: 1.5rem;
+            --border-radius: 0.5rem;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            max-width: var(--container-width);
+            padding: 2.5rem var(--container-padding) 1.5rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--primary-dark);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        main {
+            width: 100%;
+            max-width: var(--container-width);
+            padding: 0 var(--container-padding);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.75rem;
+            box-shadow: var(--shadow);
+        }
+
+        .calc-selector {
+            margin-bottom: 2rem;
+        }
+
+        .calc-type-radio {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .calc-type-radio legend {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.625rem;
+            background-color: var(--background);
+            border-radius: var(--border-radius);
+            padding: 0.75rem;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+            padding: 0.625rem 0.75rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .radio-option:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .radio-option input[type="radio"] {
+            margin-right: 0.75rem;
+            cursor: pointer;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .radio-option label {
+            cursor: pointer;
+            font-weight: normal;
+            width: 100%;
+        }
+
+        .calc-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        @media (min-width: 640px) {
+            .calc-form {
+                display: grid;
+                grid-template-columns: 1fr auto 1fr;
+                gap: 0.75rem;
+                align-items: center;
+            }
+            
+            .calc-form button[type="submit"] {
+                grid-column: 1 / -1;
+                margin-top: 1.25rem;
+                max-width: 250px;
+                justify-self: center;
+            }
+            
+            .result {
+                grid-column: 1 / -1;
+                margin-top: 2rem;
+            }
+
+            /* Pill style for radio buttons on desktop */
+            .radio-group {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 0.75rem;
+                padding: 0.875rem;
+            }
+
+            .radio-option {
+                border: 1px solid var(--border);
+                background-color: white;
+                border-radius: 2rem;
+                padding: 0.75rem 1rem;
+            }
+
+            .radio-option:hover {
+                border-color: var(--primary);
+                background-color: rgba(59, 130, 246, 0.05);
+            }
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .input-group-addon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.875rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.5;
+            white-space: nowrap;
+        }
+
+        input {
+            padding: 0.875rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border);
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.15s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Remove the light blue box from radio buttons */
+        input[type="radio"]:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* Keep the visual focus indicator for accessibility */
+        input[type="radio"]:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        input::placeholder {
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        button {
+            padding: 0.875rem 1.75rem;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.15s;
+            font-size: 1rem;
+            margin-top: 0.75rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.4);
+        }
+
+        /* Improved result display */
+        @keyframes resultFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .result.visible {
+            display: block;
+            animation: resultFadeIn 0.3s ease-out;
+        }
+        
+        .result {
+            background-color: var(--success-light);
+            border-radius: var(--border-radius);
+            padding: 1.75rem;
+            margin-top: 2.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .result-heading {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--success);
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .result-formula {
+            font-family: monospace;
+            background-color: white;
+            padding: 0.875rem 1.125rem;
+            border-radius: var(--border-radius);
+            display: block;
+            margin-bottom: 1.5rem;
+            overflow-x: auto;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: var(--text);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+        }
+
+        .result-extra {
+            display: flex;
+            flex-direction: column;
+            gap: 0.875rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(16, 185, 129, 0.15);
+        }
+
+        .result-extra-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.625rem 0;
+            color: var(--text);
+        }
+
+        .result-extra-item-label {
+            font-weight: 500;
+        }
+        
+        .result-extra-item-value {
+            font-weight: 600;
+        }
+
+        .animal-container {
+            margin-top: 2rem;
+            width: 100%;
+            aspect-ratio: 16/9;
+            max-height: 300px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+            display: none;
+        }
+
+        .animal-container.visible {
+            display: block;
+        }
+
+        .animal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        footer {
+            margin-top: auto;
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Mobile styles */
+        @media (max-width: 640px) {
+            :root {
+                --container-padding: 1rem;
+            }
+
+            h1 {
+                font-size: 1.625rem;
+            }
+
+            h2 {
+                font-size: 1.125rem;
+            }
+
+            .card {
+                padding: 1.375rem;
+            }
+            
+            .calc-form {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .input-group-addon {
+                text-align: center;
+                padding: 0.75rem 0;
+                font-weight: 600;
+            }
+
+            .result-value {
+                font-size: 2rem;
+            }
+            
+            .result-formula {
+                font-size: 0.875rem;
+                padding: 0.625rem 0.875rem;
+            }
+            
+            .result-extra-item {
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Focus styles for keyboard navigation */
+        *:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Quick Percent Calculator</h1>
+        <h2>Easy percent calculations • Instant results • Cute animal photos</h2>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="calc-selector">
+                <fieldset class="calc-type-radio">
+                    <legend>What would you like to calculate?</legend>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="type-percent-of" name="calc-type" value="percent-of" checked>
+                            <label for="type-percent-of">Find the percentage of a number</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="type-percent-is" name="calc-type" value="percent-is">
+                            <label for="type-percent-is">Find what percentage one number is of another</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="type-percent-change" name="calc-type" value="percent-change">
+                            <label for="type-percent-change">Calculate percentage change</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="type-percent-difference" name="calc-type" value="percent-difference">
+                            <label for="type-percent-difference">Find percentage difference between numbers</label>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+
+            <!-- What is X% of Y? -->
+            <form id="form-percent-of" class="calc-form">
+                <div class="input-group">
+                    <input type="text" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
+                    <div id="percent-of-x-desc" class="sr-only">Enter the percentage value without the % symbol</div>
+                </div>
+                <div class="input-group-addon">% of</div>
+                <div class="input-group">
+                    <input type="text" id="percent-of-y" placeholder="Enter the number" required>
+                </div>
+                <button type="submit" id="percent-of-submit">Calculate</button>
+
+                <div class="result" id="result-percent-of">
+                    <h3 class="result-heading">Here's your result</h3>
+                    <div class="result-value" id="percent-of-result"></div>
+                    <div class="result-formula" id="percent-of-formula"></div>
+                </div>
+            </form>
+
+            <!-- X is what % of Y? -->
+            <form id="form-percent-is" class="calc-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" id="percent-is-x" placeholder="Enter your value" required>
+                </div>
+                <div class="input-group-addon">is what percentage of</div>
+                <div class="input-group">
+                    <input type="text" id="percent-is-y" placeholder="Enter total value" required>
+                </div>
+                <button type="submit" id="percent-is-submit">Calculate</button>
+
+                <div class="result" id="result-percent-is">
+                    <h3 class="result-heading">Here's your result</h3>
+                    <div class="result-value" id="percent-is-result"></div>
+                    <div class="result-formula" id="percent-is-formula"></div>
+                </div>
+            </form>
+
+            <!-- What is the % change from X to Y? -->
+            <form id="form-percent-change" class="calc-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" id="percent-change-x" placeholder="Enter starting value" required>
+                </div>
+                <div class="input-group-addon">changed to</div>
+                <div class="input-group">
+                    <input type="text" id="percent-change-y" placeholder="Enter new value" required>
+                </div>
+                <button type="submit" id="percent-change-submit">Calculate</button>
+
+                <div class="result" id="result-percent-change">
+                    <h3 class="result-heading">Here's your result</h3>
+                    <div class="result-value" id="percent-change-result"></div>
+                    <div class="result-formula" id="percent-change-formula"></div>
+                    <div class="result-extra" id="percent-change-extra"></div>
+                </div>
+            </form>
+
+            <!-- What is the % difference between X and Y? -->
+            <form id="form-percent-difference" class="calc-form" style="display: none;">
+                <div class="input-group">
+                    <input type="text" id="percent-difference-x" placeholder="Enter first number" required>
+                </div>
+                <div class="input-group-addon">compared with</div>
+                <div class="input-group">
+                    <input type="text" id="percent-difference-y" placeholder="Enter second number" required>
+                </div>
+                <button type="submit" id="percent-difference-submit">Calculate</button>
+
+                <div class="result" id="result-percent-difference">
+                    <h3 class="result-heading">Here's your result</h3>
+                    <div class="result-value" id="percent-difference-result"></div>
+                    <div class="result-formula" id="percent-difference-formula"></div>
+                    <div class="result-extra" id="percent-difference-extra"></div>
+                </div>
+            </form>
+
+            <div class="animal-container" id="animal-container">
+                <img id="animal-image" class="animal-image" alt="Random cute animal" src="">
+                <div class="loading" id="animal-loading">Loading cute animal...</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Quick Percent Calculator | Fast, accurate, and adorably rewarding</p>
+    </footer>
+    <script>
+        // DOM Elements
+        const forms = {
+            'percent-of': document.getElementById('form-percent-of'),
+            'percent-is': document.getElementById('form-percent-is'),
+            'percent-change': document.getElementById('form-percent-change'),
+            'percent-difference': document.getElementById('form-percent-difference')
+        };
+        const results = {
+            'percent-of': document.getElementById('result-percent-of'),
+            'percent-is': document.getElementById('result-percent-is'),
+            'percent-change': document.getElementById('result-percent-change'),
+            'percent-difference': document.getElementById('result-percent-difference')
+        };
+        const calcTypeRadios = document.querySelectorAll('input[name="calc-type"]');
+        const radioOptions = document.querySelectorAll('.radio-option');
+        const animalContainer = document.getElementById('animal-container');
+        const animalImage = document.getElementById('animal-image');
+        const animalLoading = document.getElementById('animal-loading');
+
+        // Helper Functions
+        function formatNumber(num) {
+            // Round to nearest whole number
+            num = Math.round(num);
+            
+            // Convert number to string format with commas
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function parseInput(input) {
+            // Remove all non-numeric characters except decimal point and minus sign
+            const sanitized = input.replace(/[^\d.-]/g, '');
+            // Handle multiple decimal points
+            const parts = sanitized.split('.');
+            if (parts.length > 2) {
+                return parseFloat(parts[0] + '.' + parts.slice(1).join(''));
+            }
+            return parseFloat(sanitized);
+        }
+
+        // A single dynamic fetch for a random “cute animal” via Unsplash
+        async function getRandomAnimal() {
+  // Show loader
+  animalContainer.classList.add('visible');
+  animalLoading.style.display = 'flex';
+  animalLoading.textContent = 'Loading cute animal…';
+
+  requestAnimationFrame(async () => {
+    const w = animalContainer.clientWidth || 640;
+    const h = Math.round(w * 9 / 16);
+
+    // List of allowed species
+    const speciesList = [
+      'puppy', 'cat', 'hamster', 'fox', 'rat',
+      'frog', 'mouse', 'ferret', 'raccoon',
+      'otter', 'beaver', 'parrot', 'horse', 'chinchilla'
+    ];
+    // Pick one at random
+    const query = speciesList[Math.floor(Math.random() * speciesList.length)];
+
+    // Build Unsplash API URL
+    const url = new URL('https://api.unsplash.com/photos/random');
+    url.searchParams.set('query', query);
+    url.searchParams.set('topics', 'animals');
+    url.searchParams.set('w', w);
+    url.searchParams.set('h', h);
+
+    try {
+      const res = await fetch(url.toString(), {
+        headers: {
+          Authorization: 'Client-ID yxPC5-Ye8AvjmgDNv0e_1nma2K8cNdHur7xFpX_DCnI'
+        }
+      });
+      if (!res.ok) throw new Error(`Unsplash error ${res.status}`);
+
+      const { urls } = await res.json();
+      animalImage.src = urls.small;
+      animalLoading.style.display = 'none';
+    } catch (err) {
+      console.error('getRandomAnimal error:', err);
+      animalLoading.textContent = '😿 Couldn’t load a cute animal — try again!';
+    }
+  });
+}
+
+        // Input Formatting
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('blur', function() {
+                const value = this.value.trim();
+                if (value) {
+                    const num = parseInput(value);
+                    if (!isNaN(num)) {
+                        this.value = formatNumber(num);
+                    }
+                }
+            });
+
+            input.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const pastedText = (e.clipboardData || window.clipboardData).getData('text');
+                const num = parseInput(pastedText);
+                if (!isNaN(num)) {
+                    this.value = formatNumber(num);
+                }
+            });
+        });
+
+        // Calculator Type Switch - Improved click handling
+        radioOptions.forEach(option => {
+            option.addEventListener('click', function(e) {
+                // If the click wasn't directly on the radio input, find and click it
+                const radio = this.querySelector('input[type="radio"]');
+                if (e.target !== radio) {
+                    radio.click();
+                }
+            });
+        });
+
+        calcTypeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                const selectedType = this.value;
+                
+                // Hide all forms and show the selected one
+                Object.keys(forms).forEach(type => {
+                    forms[type].style.display = 'none';
+                    results[type].classList.remove('visible');
+                });
+                
+                forms[selectedType].style.display = 'grid';
+                animalContainer.classList.remove('visible');
+            });
+        });
+
+        // Form Submissions
+        forms['percent-of'].addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const percentInput = document.getElementById('percent-of-x').value;
+            const valueInput = document.getElementById('percent-of-y').value;
+            
+            const percent = parseInput(percentInput);
+            const value = parseInput(valueInput);
+            
+            if (isNaN(percent) || isNaN(value)) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+            
+            const result = (percent * value) / 100;
+            
+            // Round to whole number
+            const displayResult = Math.round(result);
+            
+            // Format result
+            const resultFormatted = formatNumber(displayResult);
+            const valueFormatted = formatNumber(value);
+            const percentFormatted = formatNumber(percent);
+            
+            document.getElementById('percent-of-result').textContent = resultFormatted;
+            document.getElementById('percent-of-formula').textContent = `(${valueFormatted} × ${percentFormatted}%) ÷ 100 = ${resultFormatted}`;
+            
+            results['percent-of'].classList.add('visible');
+            getRandomAnimal();
+        });
+
+        forms['percent-is'].addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const valueInput = document.getElementById('percent-is-x').value;
+            const totalInput = document.getElementById('percent-is-y').value;
+            
+            const value = parseInput(valueInput);
+            const total = parseInput(totalInput);
+            
+            if (isNaN(value) || isNaN(total)) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+            
+            if (total === 0) {
+                alert('Total value cannot be zero.');
+                return;
+            }
+            
+            const result = (value / total) * 100;
+            
+            // Round to whole number
+            const displayResult = Math.round(result);
+            
+            // Format result
+            const resultFormatted = formatNumber(displayResult);
+            const valueFormatted = formatNumber(value);
+            const totalFormatted = formatNumber(total);
+            
+            document.getElementById('percent-is-result').textContent = resultFormatted + '%';
+            document.getElementById('percent-is-formula').textContent = `(${valueFormatted} ÷ ${totalFormatted}) × 100 = ${resultFormatted}%`;
+            
+            results['percent-is'].classList.add('visible');
+            getRandomAnimal();
+        });
+
+        forms['percent-change'].addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const initialInput = document.getElementById('percent-change-x').value;
+            const newInput = document.getElementById('percent-change-y').value;
+            
+            const initial = parseInput(initialInput);
+            const newVal = parseInput(newInput);
+            
+            if (isNaN(initial) || isNaN(newVal)) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+            
+            if (initial === 0) {
+                if (newVal === 0) {
+                    document.getElementById('percent-change-result').textContent = '0%';
+                    document.getElementById('percent-change-formula').textContent = `((${formatNumber(newVal)} - ${formatNumber(initial)}) ÷ ${formatNumber(initial)}) × 100 = 0%`;
+                    results['percent-change'].classList.add('visible');
+                    getRandomAnimal();
+                } else {
+                    alert('Initial value cannot be zero when calculating percentage change.');
+                }
+                return;
+            }
+            
+            const change = newVal - initial;
+            const percentChange = (change / Math.abs(initial)) * 100;
+            const multiplier = newVal / initial;
+            
+            // Round all values to whole numbers
+            const displayPercentChange = Math.round(percentChange);
+            const displayMultiplier = Math.round(multiplier * 100) / 100; // Keep 2 decimals for multiplier
+            const displayChange = Math.round(Math.abs(change));
+            
+            // Format result values
+            const percentChangeFormatted = formatNumber(displayPercentChange);
+            const changeFormatted = formatNumber(displayChange);
+            const multiplierFormatted = displayMultiplier.toFixed(2);
+            
+            document.getElementById('percent-change-result').textContent = percentChangeFormatted + '%';
+            document.getElementById('percent-change-formula').textContent = `((${formatNumber(newVal)} - ${formatNumber(initial)}) ÷ ${formatNumber(initial)}) × 100 = ${percentChangeFormatted}%`;
+            
+              const extraHTML = `
+                  <div class="result-extra-item">
+                      <div class="result-extra-item-label">Multiplier:</div>
+                      <div class="result-extra-item-value">${multiplierFormatted}×</div>
+                  </div>
+                  <div class="result-extra-item">
+                      <div class="result-extra-item-label">${change >= 0 ? 'Increase' : 'Decrease'} amount:</div>
+                      <div class="result-extra-item-value">${changeFormatted}</div>
+                  </div>
+              `;
+            
+            document.getElementById('percent-change-extra').innerHTML = extraHTML;
+            results['percent-change'].classList.add('visible');
+            getRandomAnimal();
+        });
+
+        forms['percent-difference'].addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstInput = document.getElementById('percent-difference-x').value;
+            const secondInput = document.getElementById('percent-difference-y').value;
+            
+            const first = parseInput(firstInput);
+            const second = parseInput(secondInput);
+            
+            if (isNaN(first) || isNaN(second)) {
+                alert('Please enter valid numbers.');
+                return;
+            }
+            
+            if (first === 0 && second === 0) {
+                document.getElementById('percent-difference-result').textContent = '0%';
+                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 0%`;
+                results['percent-difference'].classList.add('visible');
+                getRandomAnimal();
+                return;
+            }
+            
+            if (first === 0 || second === 0) {
+                document.getElementById('percent-difference-result').textContent = '200%';
+                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 200%`;
+                
+                const nonZeroValue = first === 0 ? second : first;
+                const extraHTML = `
+                    <div class="result-extra-item">
+                        <div class="result-extra-item-label">Absolute difference:</div>
+                        <div class="result-extra-item-value">${formatNumber(Math.abs(nonZeroValue))}</div>
+                    </div>
+                    <div class="result-extra-item">
+                        <div class="result-extra-item-label">Percent difference:</div>
+                        <div class="result-extra-item-value">200%</div>
+                    </div>
+                `;
+                
+                document.getElementById('percent-difference-extra').innerHTML = extraHTML;
+                results['percent-difference'].classList.add('visible');
+                getRandomAnimal();
+                return;
+            }
+            
+            const difference = Math.abs(second - first);
+            const average = (first + second) / 2;
+            const percentDifference = (difference / average) * 100;
+            
+            // Round all values to whole numbers
+            const displayPercentDiff = Math.round(percentDifference);
+            const displayDifference = Math.round(difference);
+            const displayAverage = Math.round(average);
+            
+            // Format with new number formatting
+            const percentDiffFormatted = formatNumber(displayPercentDiff);
+            const differenceFormatted = formatNumber(displayDifference);
+            const averageFormatted = formatNumber(displayAverage);
+            
+            document.getElementById('percent-difference-result').textContent = percentDiffFormatted + '%';
+            document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = ${percentDiffFormatted}%`;
+            
+            const extraHTML = `
+                <div class="result-extra-item">
+                    <div class="result-extra-item-label">Absolute difference:</div>
+                    <div class="result-extra-item-value">${differenceFormatted}</div>
+                </div>
+                <div class="result-extra-item">
+                    <div class="result-extra-item-label">Average value:</div>
+                    <div class="result-extra-item-value">${averageFormatted}</div>
+                </div>
+                <div class="result-extra-item">
+                    <div class="result-extra-item-label">Percent difference:</div>
+                    <div class="result-extra-item-value">${percentDiffFormatted}%</div>
+                </div>
+            `;
+            
+            document.getElementById('percent-difference-extra').innerHTML = extraHTML;
+            results['percent-difference'].classList.add('visible');
+            getRandomAnimal();
+        });
+
+        // Add click handlers for buttons
+        document.getElementById('percent-of-submit').addEventListener('click', function(e) {
+            e.preventDefault();
+            const formEvent = new Event('submit', { cancelable: true });
+            forms['percent-of'].dispatchEvent(formEvent);
+        });
+        
+        document.getElementById('percent-is-submit').addEventListener('click', function(e) {
+            e.preventDefault();
+            const formEvent = new Event('submit', { cancelable: true });
+            forms['percent-is'].dispatchEvent(formEvent);
+        });
+        
+        document.getElementById('percent-change-submit').addEventListener('click', function(e) {
+            e.preventDefault();
+            const formEvent = new Event('submit', { cancelable: true });
+            forms['percent-change'].dispatchEvent(formEvent);
+        });
+        
+        document.getElementById('percent-difference-submit').addEventListener('click', function(e) {
+            e.preventDefault();
+            const formEvent = new Event('submit', { cancelable: true });
+            forms['percent-difference'].dispatchEvent(formEvent);
+        });
+
+        // Initialize with first form visible
+        document.getElementById('type-percent-of').checked = true;
+        forms['percent-of'].style.display = 'grid';
+    </script>
+</body>
+</html>

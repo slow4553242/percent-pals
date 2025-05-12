@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+            h1 {
+                font-size: 1.625rem;
+            }
+
+            h2 {
+                font-size: 1.125rem;
+            }
+            h1 {
+                font-size: 1.625rem;
+            }
+
+            h2 {
+                font-size: 1.125rem;
+            }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -62,6 +75,12 @@
             max-width: var(--container-width);
             padding: 2.5rem var(--container-padding) 1.5rem;
             text-align: center;
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+        
+        .header-content {
+            width: 100%;
+            margin: 0 auto;
         }
 
         h1 {
@@ -86,6 +105,7 @@
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .card {
@@ -93,6 +113,8 @@
             border-radius: var(--border-radius);
             padding: 1.75rem;
             box-shadow: var(--shadow);
+            width: 100%;
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         .calc-selector {
@@ -430,12 +452,27 @@ input[type="number"] {
             text-align: center;
             color: var(--text-light);
             font-size: 0.875rem;
+            box-sizing: border-box; /* Include padding in width calculation */
         }
 
         /* Mobile styles */
         @media (max-width: 640px) {
             :root {
                 --container-padding: 1rem;
+            }
+
+            body {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+                overflow-x: hidden; /* Prevent horizontal scroll */
+            }
+
+            main {
+                width: 100%;
+                padding: 0 var(--container-padding);
+                box-sizing: border-box; /* Ensure padding is included in width */
             }
 
             h1 {
@@ -447,7 +484,10 @@ input[type="number"] {
             }
 
             .card {
-                padding: 1.375rem;
+                margin: 0;
+                width: 100%;
+                border-radius: var(--border-radius);
+                padding: 1.25rem; /* Slightly reduced padding */
             }
             
             .calc-form {
@@ -521,8 +561,10 @@ input[type="number"] {
 </head>
 <body>
     <header>
-        <h1>Quick Percent Calculator</h1>
-        <h2>Easy percent calculations • Instant results • Cute animal photos</h2>
+        <div class="header-content">
+            <h1>Quick Percent Calculator</h1>
+            <h2>Easy percent calculations • Instant results • Cute animal photos</h2>
+        </div>
     </header>
 
     <main>

@@ -524,27 +524,23 @@
                     <legend>What would you like to calculate?</legend>
                     <div class="radio-group">
                         <div class="radio-option">
-                            <input type="radio" id="type-percent-of" name="calc-type" value="percent-of" checked>
+                            <input type="radio" id="type-percent-change" name="calc-type" value="percent-change" checked>
+                            <label for="type-percent-change">Calculate percentage change</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="type-percent-of" name="calc-type" value="percent-of">
                             <label for="type-percent-of">Find the percentage of a number</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="type-percent-is" name="calc-type" value="percent-is">
                             <label for="type-percent-is">Find what percentage one number is of another</label>
                         </div>
-                        <div class="radio-option">
-                            <input type="radio" id="type-percent-change" name="calc-type" value="percent-change">
-                            <label for="type-percent-change">Calculate percentage change</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="type-percent-difference" name="calc-type" value="percent-difference">
-                            <label for="type-percent-difference">Find percentage difference between numbers</label>
-                        </div>
                     </div>
                 </fieldset>
             </div>
 
             <!-- What is X% of Y? -->
-            <form id="form-percent-of" class="calc-form">
+            <form id="form-percent-of" class="calc-form" style="display: none;">
                 <div class="input-group">
                     <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
                     <div id="percent-of-x-desc" class="sr-only">Enter the percentage value without the % symbol</div>
@@ -599,24 +595,7 @@
                 </div>
             </form>
 
-            <!-- What is the % difference between X and Y? -->
-            <form id="form-percent-difference" class="calc-form" style="display: none;">
-                <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-x" placeholder="Enter first number" required>
-                </div>
-                <div class="input-group-addon">compared with</div>
-                <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-y" placeholder="Enter second number" required>
-                </div>
-                <button type="submit" id="percent-difference-submit">Calculate</button>
-
-                <div class="result" id="result-percent-difference">
-                    <h3 class="result-heading">Here's your result</h3>
-                    <div class="result-value" id="percent-difference-result"></div>
-                    <div class="result-formula" id="percent-difference-formula"></div>
-                    <div class="result-extra" id="percent-difference-extra"></div>
-                </div>
-            </form>
+            <!-- Removed the percentage difference form as requested -->
 
             <div class="animal-container" id="animal-container">
                 <img id="animal-image" class="animal-image" alt="Random cute animal" src="">
@@ -633,14 +612,12 @@
         const forms = {
             'percent-of': document.getElementById('form-percent-of'),
             'percent-is': document.getElementById('form-percent-is'),
-            'percent-change': document.getElementById('form-percent-change'),
-            'percent-difference': document.getElementById('form-percent-difference')
+            'percent-change': document.getElementById('form-percent-change')
         };
         const results = {
             'percent-of': document.getElementById('result-percent-of'),
             'percent-is': document.getElementById('result-percent-is'),
-            'percent-change': document.getElementById('result-percent-change'),
-            'percent-difference': document.getElementById('result-percent-difference')
+            'percent-change': document.getElementById('result-percent-change')
         };
         const calcTypeRadios = document.querySelectorAll('input[name="calc-type"]');
         const radioOptions = document.querySelectorAll('.radio-option');
@@ -888,86 +865,7 @@
             getRandomAnimal();
         });
 
-        forms['percent-difference'].addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const firstInput = document.getElementById('percent-difference-x').value;
-            const secondInput = document.getElementById('percent-difference-y').value;
-            
-            const first = parseInput(firstInput);
-            const second = parseInput(secondInput);
-            
-            if (isNaN(first) || isNaN(second)) {
-                alert('Please enter valid numbers.');
-                return;
-            }
-            
-            if (first === 0 && second === 0) {
-                document.getElementById('percent-difference-result').textContent = '0%';
-                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 0%`;
-                results['percent-difference'].classList.add('visible');
-                getRandomAnimal();
-                return;
-            }
-            
-            if (first === 0 || second === 0) {
-                document.getElementById('percent-difference-result').textContent = '200%';
-                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 200%`;
-                
-                const nonZeroValue = first === 0 ? second : first;
-                const extraHTML = `
-                    <div class="result-extra-item">
-                        <div class="result-extra-item-label">Absolute difference:</div>
-                        <div class="result-extra-item-value">${formatNumber(Math.abs(nonZeroValue))}</div>
-                    </div>
-                    <div class="result-extra-item">
-                        <div class="result-extra-item-label">Percent difference:</div>
-                        <div class="result-extra-item-value">200%</div>
-                    </div>
-                `;
-                
-                document.getElementById('percent-difference-extra').innerHTML = extraHTML;
-                results['percent-difference'].classList.add('visible');
-                getRandomAnimal();
-                return;
-            }
-            
-            const difference = Math.abs(second - first);
-            const average = (first + second) / 2;
-            const percentDifference = (difference / average) * 100;
-            
-            // Round all values to whole numbers
-            const displayPercentDiff = Math.round(percentDifference);
-            const displayDifference = Math.round(difference);
-            const displayAverage = Math.round(average);
-            
-            // Format with new number formatting
-            const percentDiffFormatted = formatNumber(displayPercentDiff);
-            const differenceFormatted = formatNumber(displayDifference);
-            const averageFormatted = formatNumber(displayAverage);
-            
-            document.getElementById('percent-difference-result').textContent = percentDiffFormatted + '%';
-            document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = ${percentDiffFormatted}%`;
-            
-            const extraHTML = `
-                <div class="result-extra-item">
-                    <div class="result-extra-item-label">Absolute difference:</div>
-                    <div class="result-extra-item-value">${differenceFormatted}</div>
-                </div>
-                <div class="result-extra-item">
-                    <div class="result-extra-item-label">Average value:</div>
-                    <div class="result-extra-item-value">${averageFormatted}</div>
-                </div>
-                <div class="result-extra-item">
-                    <div class="result-extra-item-label">Percent difference:</div>
-                    <div class="result-extra-item-value">${percentDiffFormatted}%</div>
-                </div>
-            `;
-            
-            document.getElementById('percent-difference-extra').innerHTML = extraHTML;
-            results['percent-difference'].classList.add('visible');
-            getRandomAnimal();
-        });
+        // Removed percent-difference form submit handler
 
         // Add click handlers for buttons
         document.getElementById('percent-of-submit').addEventListener('click', function(e) {
@@ -988,15 +886,11 @@
             forms['percent-change'].dispatchEvent(formEvent);
         });
         
-        document.getElementById('percent-difference-submit').addEventListener('click', function(e) {
-            e.preventDefault();
-            const formEvent = new Event('submit', { cancelable: true });
-            forms['percent-difference'].dispatchEvent(formEvent);
-        });
+        // Removed percent-difference button click handler
 
         // Initialize with first form visible
-        document.getElementById('type-percent-of').checked = true;
-        forms['percent-of'].style.display = 'grid';
+        document.getElementById('type-percent-change').checked = true;
+        forms['percent-change'].style.display = 'grid';
     </script>
 </body>
 </html>

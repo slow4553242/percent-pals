@@ -38,7 +38,7 @@
             --container-padding: 1.5rem;
             --border-radius: 0.5rem;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        }
+        } */
 
         * {
             margin: 0;
@@ -153,13 +153,20 @@
             gap: 1.25rem;
         }
 
-        /* Desktop-specific grid layout - ADD THIS SECTION HERE */
+        /* Desktop-specific grid layout */
         @media (min-width: 640px) {
             .calc-form {
                 display: grid;
                 grid-template-columns: 1fr auto 1fr;
-                gap: 0.75rem;
+                column-gap: 1.5rem; /* Increased gap between columns */
+                row-gap: 0.75rem;
                 align-items: center;
+            }
+            
+            .input-group-addon {
+                justify-self: center;
+                min-width: 80px; /* Ensure minimum width for operator text */
+                text-align: center;
             }
             
             .calc-form button[type="submit"] {
@@ -198,10 +205,12 @@
 
             /* Pill style for radio buttons on desktop */
             .radio-group {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 0.75rem;
-                padding: 0.875rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.625rem;
+                background-color: var(--background);
+                border-radius: var(--border-radius);
+                padding: 0.75rem;
             }
 
             .radio-option {
@@ -227,11 +236,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0 0.875rem;
+            padding: 0 1rem; /* Increase horizontal padding */
             font-weight: 600;
             color: var(--text);
             line-height: 1.5;
             white-space: nowrap;
+            min-width: 6rem; /* Ensure minimum width */
+            text-align: center;
         }
 
         input {
@@ -244,24 +255,19 @@
         }
 
         /* Hide number input spinners - ADD THIS */
-        input[type="number"]::-webkit-outer-spin-button,
+        /* No longer needed since we're using text inputs
+input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
             margin: 0;
         }
 
-        /* Firefox - ADD THIS */
-        input[type="number"] {
+        /* Firefox - No longer needed
+input[type="number"] {
             -moz-appearance: textfield;
         }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-        }
-
-        input[type="text"]:focus {
+        input:focus {
             outline: none;
             border-color: var(--primary);
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
@@ -453,6 +459,8 @@
                 text-align: center;
                 padding: 0.75rem 0;
                 font-weight: 600;
+                min-width: 100%; /* Full width on mobile */
+                margin: 0.25rem 0; /* Add some vertical spacing */
             }
 
             .result-value {
@@ -524,16 +532,16 @@
                     <legend>What would you like to calculate?</legend>
                     <div class="radio-group">
                         <div class="radio-option">
+                            <input type="radio" id="type-percent-change" name="calc-type" value="percent-change">
+                            <label for="type-percent-change">Calculate percentage change</label>
+                        </div>
+                        <div class="radio-option">
                             <input type="radio" id="type-percent-of" name="calc-type" value="percent-of" checked>
                             <label for="type-percent-of">Find the percentage of a number</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="type-percent-is" name="calc-type" value="percent-is">
                             <label for="type-percent-is">Find what percentage one number is of another</label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" id="type-percent-change" name="calc-type" value="percent-change">
-                            <label for="type-percent-change">Calculate percentage change</label>
                         </div>
                         <div class="radio-option">
                             <input type="radio" id="type-percent-difference" name="calc-type" value="percent-difference">
@@ -546,12 +554,12 @@
             <!-- What is X% of Y? -->
             <form id="form-percent-of" class="calc-form">
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-x" aria-describedby="percent-of-x-desc" placeholder="Enter percentage value" required>
                     <div id="percent-of-x-desc" class="sr-only">Enter the percentage value without the % symbol</div>
                 </div>
                 <div class="input-group-addon">% of</div>
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-y" placeholder="Enter the number" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-of-y" placeholder="Enter the number" required>
                 </div>
                 <button type="submit" id="percent-of-submit">Calculate</button>
 
@@ -565,11 +573,11 @@
             <!-- X is what % of Y? -->
             <form id="form-percent-is" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-x" placeholder="Enter your value" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-x" placeholder="Enter your value" required>
                 </div>
                 <div class="input-group-addon">is what percentage of</div>
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-y" placeholder="Enter total value" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-is-y" placeholder="Enter total value" required>
                 </div>
                 <button type="submit" id="percent-is-submit">Calculate</button>
 
@@ -583,11 +591,11 @@
             <!-- What is the % change from X to Y? -->
             <form id="form-percent-change" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-x" placeholder="Enter starting value" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-x" placeholder="Enter starting value" required>
                 </div>
                 <div class="input-group-addon">changed to</div>
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-y" placeholder="Enter new value" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-change-y" placeholder="Enter new value" required>
                 </div>
                 <button type="submit" id="percent-change-submit">Calculate</button>
 
@@ -602,11 +610,11 @@
             <!-- What is the % difference between X and Y? -->
             <form id="form-percent-difference" class="calc-form" style="display: none;">
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-x" placeholder="Enter first number" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-x" placeholder="Enter first number" required>
                 </div>
                 <div class="input-group-addon">compared with</div>
                 <div class="input-group">
-                    <input type="number" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-y" placeholder="Enter second number" required>
+                    <input type="text" inputmode="decimal" pattern="[0-9]*\.?[0-9]*" id="percent-difference-y" placeholder="Enter second number" required>
                 </div>
                 <button type="submit" id="percent-difference-submit">Calculate</button>
 
@@ -649,16 +657,13 @@
         const animalLoading = document.getElementById('animal-loading');
 
         // Helper Functions
-        function formatNumber(num) {
-            // Round to nearest whole number
-            num = Math.round(num);
-            
-            // Convert number to string format with commas
+        function formatWithCommas(num) {
+            // Format number with commas for thousands separator
             return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
         }
 
         function parseInput(input) {
-            // Remove all non-numeric characters except decimal point and minus sign
+            // Remove all non-numeric characters (including commas) except decimal point and minus sign
             const sanitized = input.replace(/[^\d.-]/g, '');
             // Handle multiple decimal points
             const parts = sanitized.split('.');
@@ -713,24 +718,69 @@
   });
 }
 
-        // Input Formatting
+        // Input Formatting and Validation
         document.querySelectorAll('input[type="text"]').forEach(input => {
+            // Add input listener to validate and format as user types
+            input.addEventListener('input', function(e) {
+                let value = this.value;
+                
+                // Strip out any non-numeric chars except decimal, minus sign, and commas
+                const cleanValue = value.replace(/[^0-9,.\-]/g, '');
+                
+                if (cleanValue !== value) {
+                    // Only update the value if we needed to clean it
+                    this.value = cleanValue;
+                }
+            });
+            
+            // Add keypress listener for more immediate feedback
+            input.addEventListener('keypress', function(e) {
+                // Allow numbers, decimal point, minus sign, and comma
+                const charCode = (e.which) ? e.which : e.keyCode;
+                if (charCode !== 44 && charCode !== 45 && charCode !== 46 && (charCode < 48 || charCode > 57)) {
+                    e.preventDefault();
+                    return false;
+                }
+                return true;
+            });
+            
+            // Format on blur (when user leaves the field)
             input.addEventListener('blur', function() {
-                const value = this.value.trim();
+                // Get the input value and remove existing commas
+                let value = this.value.replace(/,/g, '');
+                
                 if (value) {
-                    const num = parseInput(value);
+                    // Parse the input to a number
+                    const num = parseFloat(value);
+                    
                     if (!isNaN(num)) {
-                        this.value = formatNumber(num);
+                        // Only format with commas if the number is >= 1000
+                        if (Math.abs(num) >= 1000) {
+                            this.value = formatWithCommas(num);
+                        } else {
+                            this.value = num.toString();
+                        }
                     }
                 }
             });
-
+            
+            // Handle paste events
             input.addEventListener('paste', function(e) {
                 e.preventDefault();
                 const pastedText = (e.clipboardData || window.clipboardData).getData('text');
-                const num = parseInput(pastedText);
+                // Remove any non-numeric characters except decimal and minus
+                const sanitized = pastedText.replace(/[^\d.-]/g, '');
+                
+                // Handle multiple decimal points
+                const parts = sanitized.split('.');
+                let cleanValue = parts[0];
+                if (parts.length > 1) {
+                    cleanValue += '.' + parts.slice(1).join('');
+                }
+                
+                const num = parseFloat(cleanValue);
                 if (!isNaN(num)) {
-                    this.value = formatNumber(num);
+                    this.value = num;
                 }
             });
         });
@@ -765,8 +815,9 @@
         forms['percent-of'].addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const percentInput = document.getElementById('percent-of-x').value;
-            const valueInput = document.getElementById('percent-of-y').value;
+            // Get cleaned inputs - handle comma-formatted values
+            const percentInput = document.getElementById('percent-of-x').value.replace(/,/g, '');
+            const valueInput = document.getElementById('percent-of-y').value.replace(/,/g, '');
             
             const percent = parseInput(percentInput);
             const value = parseInput(valueInput);
@@ -782,9 +833,9 @@
             const displayResult = Math.round(result);
             
             // Format result
-            const resultFormatted = formatNumber(displayResult);
-            const valueFormatted = formatNumber(value);
-            const percentFormatted = formatNumber(percent);
+            const resultFormatted = formatWithCommas(displayResult);
+            const valueFormatted = formatWithCommas(value);
+            const percentFormatted = formatWithCommas(percent);
             
             document.getElementById('percent-of-result').textContent = resultFormatted;
             document.getElementById('percent-of-formula').textContent = `(${valueFormatted} × ${percentFormatted}%) ÷ 100 = ${resultFormatted}`;
@@ -796,8 +847,9 @@
         forms['percent-is'].addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const valueInput = document.getElementById('percent-is-x').value;
-            const totalInput = document.getElementById('percent-is-y').value;
+            // Get cleaned inputs - handle comma-formatted values
+            const valueInput = document.getElementById('percent-is-x').value.replace(/,/g, '');
+            const totalInput = document.getElementById('percent-is-y').value.replace(/,/g, '');
             
             const value = parseInput(valueInput);
             const total = parseInput(totalInput);
@@ -818,9 +870,9 @@
             const displayResult = Math.round(result);
             
             // Format result
-            const resultFormatted = formatNumber(displayResult);
-            const valueFormatted = formatNumber(value);
-            const totalFormatted = formatNumber(total);
+            const resultFormatted = formatWithCommas(displayResult);
+            const valueFormatted = formatWithCommas(value);
+            const totalFormatted = formatWithCommas(total);
             
             document.getElementById('percent-is-result').textContent = resultFormatted + '%';
             document.getElementById('percent-is-formula').textContent = `(${valueFormatted} ÷ ${totalFormatted}) × 100 = ${resultFormatted}%`;
@@ -832,8 +884,9 @@
         forms['percent-change'].addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const initialInput = document.getElementById('percent-change-x').value;
-            const newInput = document.getElementById('percent-change-y').value;
+            // Get cleaned inputs - handle comma-formatted values
+            const initialInput = document.getElementById('percent-change-x').value.replace(/,/g, '');
+            const newInput = document.getElementById('percent-change-y').value.replace(/,/g, '');
             
             const initial = parseInput(initialInput);
             const newVal = parseInput(newInput);
@@ -846,7 +899,7 @@
             if (initial === 0) {
                 if (newVal === 0) {
                     document.getElementById('percent-change-result').textContent = '0%';
-                    document.getElementById('percent-change-formula').textContent = `((${formatNumber(newVal)} - ${formatNumber(initial)}) ÷ ${formatNumber(initial)}) × 100 = 0%`;
+                    document.getElementById('percent-change-formula').textContent = `((${formatWithCommas(newVal)} - ${formatWithCommas(initial)}) ÷ ${formatWithCommas(initial)}) × 100 = 0%`;
                     results['percent-change'].classList.add('visible');
                     getRandomAnimal();
                 } else {
@@ -861,16 +914,17 @@
             
             // Round all values to whole numbers
             const displayPercentChange = Math.round(percentChange);
-            const displayMultiplier = Math.round(multiplier * 100) / 100; // Keep 2 decimals for multiplier
+            // Format multiplier: round to nearest tenth (one decimal place)
+            const displayMultiplier = Math.round(multiplier * 10) / 10;
             const displayChange = Math.round(Math.abs(change));
             
             // Format result values
-            const percentChangeFormatted = formatNumber(displayPercentChange);
-            const changeFormatted = formatNumber(displayChange);
-            const multiplierFormatted = displayMultiplier.toFixed(2);
+            const percentChangeFormatted = formatWithCommas(displayPercentChange);
+            const changeFormatted = formatWithCommas(displayChange);
+            const multiplierFormatted = displayMultiplier.toFixed(1);
             
             document.getElementById('percent-change-result').textContent = percentChangeFormatted + '%';
-            document.getElementById('percent-change-formula').textContent = `((${formatNumber(newVal)} - ${formatNumber(initial)}) ÷ ${formatNumber(initial)}) × 100 = ${percentChangeFormatted}%`;
+            document.getElementById('percent-change-formula').textContent = `((${formatWithCommas(newVal)} - ${formatWithCommas(initial)}) ÷ ${formatWithCommas(initial)}) × 100 = ${percentChangeFormatted}%`;
             
               const extraHTML = `
                   <div class="result-extra-item">
@@ -891,8 +945,9 @@
         forms['percent-difference'].addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const firstInput = document.getElementById('percent-difference-x').value;
-            const secondInput = document.getElementById('percent-difference-y').value;
+            // Get cleaned inputs - handle comma-formatted values
+            const firstInput = document.getElementById('percent-difference-x').value.replace(/,/g, '');
+            const secondInput = document.getElementById('percent-difference-y').value.replace(/,/g, '');
             
             const first = parseInput(firstInput);
             const second = parseInput(secondInput);
@@ -904,7 +959,7 @@
             
             if (first === 0 && second === 0) {
                 document.getElementById('percent-difference-result').textContent = '0%';
-                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 0%`;
+                document.getElementById('percent-difference-formula').textContent = `(|${formatWithCommas(second)} - ${formatWithCommas(first)}| ÷ ((${formatWithCommas(first)} + ${formatWithCommas(second)}) ÷ 2)) × 100 = 0%`;
                 results['percent-difference'].classList.add('visible');
                 getRandomAnimal();
                 return;
@@ -918,7 +973,7 @@
                 const extraHTML = `
                     <div class="result-extra-item">
                         <div class="result-extra-item-label">Absolute difference:</div>
-                        <div class="result-extra-item-value">${formatNumber(Math.abs(nonZeroValue))}</div>
+                        <div class="result-extra-item-value">${formatWithCommas(Math.abs(nonZeroValue))}</div>
                     </div>
                     <div class="result-extra-item">
                         <div class="result-extra-item-label">Percent difference:</div>
@@ -942,12 +997,12 @@
             const displayAverage = Math.round(average);
             
             // Format with new number formatting
-            const percentDiffFormatted = formatNumber(displayPercentDiff);
-            const differenceFormatted = formatNumber(displayDifference);
-            const averageFormatted = formatNumber(displayAverage);
+            const percentDiffFormatted = formatWithCommas(displayPercentDiff);
+            const differenceFormatted = formatWithCommas(displayDifference);
+            const averageFormatted = formatWithCommas(displayAverage);
             
             document.getElementById('percent-difference-result').textContent = percentDiffFormatted + '%';
-            document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = ${percentDiffFormatted}%`;
+            document.getElementById('percent-difference-formula').textContent = `(|${formatWithCommas(second)} - ${formatWithCommas(first)}| ÷ ((${formatWithCommas(first)} + ${formatWithCommas(second)}) ÷ 2)) × 100 = ${percentDiffFormatted}%`;
             
             const extraHTML = `
                 <div class="result-extra-item">

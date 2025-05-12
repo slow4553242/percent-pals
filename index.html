@@ -1,17 +1,4 @@
-            h1 {
-                font-size: 1.625rem;
-            }
-
-            h2 {
-                font-size: 1.125rem;
-            }
-            h1 {
-                font-size: 1.625rem;
-            }
-
-            h2 {
-                font-size: 1.125rem;
-            }<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +38,7 @@
             --container-padding: 1.5rem;
             --border-radius: 0.5rem;
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        } */
+        }
 
         * {
             margin: 0;
@@ -1009,7 +996,7 @@ input[type="number"] {
             
             if (first === 0 || second === 0) {
                 document.getElementById('percent-difference-result').textContent = '200%';
-                document.getElementById('percent-difference-formula').textContent = `(|${formatNumber(second)} - ${formatNumber(first)}| ÷ ((${formatNumber(first)} + ${formatNumber(second)}) ÷ 2)) × 100 = 200%`;
+                document.getElementById('percent-difference-formula').textContent = `(|${formatWithCommas(second)} - ${formatWithCommas(first)}| ÷ ((${formatWithCommas(first)} + ${formatWithCommas(second)}) ÷ 2)) × 100 = 200%`;
                 
                 const nonZeroValue = first === 0 ? second : first;
                 const extraHTML = `
